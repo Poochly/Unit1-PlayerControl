@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class PlayerControllerX : MonoBehaviour
 {
-    private float speed = 20.0f;
-    private float turnSpeed = 45.0f;
-    private float horizontalInput;
-    private float forwardInput;
+    public float speed = 5.0f;
+    public float rotationSpeed = 25.0f;
+    public float verticalInput;
 
     // Start is called before the first frame update
     void Start()
@@ -16,14 +15,15 @@ public class PlayerControllerX : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        forwardInput = Input.GetAxis("Vertical");
+        // get the user's vertical input
+        verticalInput = Input.GetAxis("Vertical") * speed;
 
-        //Move the vehicle forward
-        transform.Translate(Vector3.forward * Time.deltaTime * forwardInput);
-        transform.Rotate(Vector3.up, turnSpeed * horizontalInput * Time.deltaTime);
+        // move the plane forward at a constant rate
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
+        // tilt the plane up/down based on up/down arrow keys
+        transform.Rotate(Vector3.right * rotationSpeed * verticalInput * Time.deltaTime);
     }
 }
